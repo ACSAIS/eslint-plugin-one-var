@@ -6,6 +6,6 @@ export function fixer(code) {
     const ast = espree.parse(code, {
         ecmaVersion: 6,
     });
-    console.log(typeof ast);
-    fs.writeFileSync('src/result', ast.toString());
+    console.log(ast);
+    fs.writeFileSync('src/result', JSON.stringify(ast));
 }
