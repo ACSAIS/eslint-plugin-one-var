@@ -1,6 +1,4 @@
-import espree from "espree";
-
-
+import * as espree from "espree";
 
 export function fixer(code) {
     const ast = espree.parse(code, {
