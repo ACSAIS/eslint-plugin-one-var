@@ -7,5 +7,5 @@ export function fixer(code) {
         ecmaVersion: 6,
     });
     console.log(ast);
-    fs.writeFileSync('src/result', JSON.stringify(ast));
+    fs.writeFileSync('src/result.json', JSON.stringify(ast), 'utf8');
 }
