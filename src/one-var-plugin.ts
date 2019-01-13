@@ -6,6 +6,17 @@ export function fixer(code) {
     const ast = espree.parse(code, {
         ecmaVersion: 6,
     });
-    console.log(ast);
+
     fs.writeFileSync('src/result.json', JSON.stringify(ast,null, 4), 'utf8');
+    traverse(ast, {
+        enter: function(path) {
+            if (path.node.type === "VariableDeclaration") {
+                //path.replaceWith(replacement)
+                if (path.node.declarations.length > 1) {
+                    const {declarations} = path.node;
+                    // console.log(JSON.stringify(path.node.kind,null, 4),);
+                }
+            }
+        },
+    });
 }
