@@ -1,7 +1,6 @@
-import espree from "espree";
+import * as espree from "espree";
 import traverse from "babel-traverse";
-import fs from "fs";
-
+import * as fs from "fs";
 
 export function fixer(code) {
     const ast = espree.parse(code, {
