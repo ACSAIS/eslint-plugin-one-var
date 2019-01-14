@@ -12,26 +12,17 @@ export function fixer(code) {
         enter: function(path) {
             if (path.node.type === "VariableDeclaration") {
                 if (path.node.declarations.length > 1) {
-                    const {declarations} = path.node;
+                    const {declarations, kind} = path.node;
                     const firstDeclaration = declarations.shift();
-                    path.node.declarations = [firstDeclaration];
                     const newNodes = [];
-                    declarations.forEach( declaration => {
-                        let newNode = {};
-                        require("ast-types").eachField(path.node, function(name, value) {
-                            // Note that undefined fields will be visited too, according to
-                            // the rules associated with node.type, and default field values
-                            // will be substituted if appropriate.
-                            newNode[name] = value;
-                        });
 
-                        newNode.declarations = [declaration];
-                        newNodes.push(newNode);
-                        console.log(path.node);
-                        path.body.insertAfter(t.identifier("b"));
+                    path.node.declarations = [firstDeclaration];
+                    declarations.forEach( declaration => {
+                        let newNode = t.variableDeclaration(kind, [declaration]);
+
+                        newNodes.push(newNode)
                     });
-                    // console.log(newNodes);
-                    // path.insertAfter(newNodes);
+                    path.parent.body.splice(path.parent.body.indexOf(path.node), 0, ...newNodes);
                 }
             }
         },
